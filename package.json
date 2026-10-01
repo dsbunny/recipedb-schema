@@ -1,0 +1,33 @@
+{
+	"name": "@dsbunny/recipedb-schema",
+	"version": "2.0.1",
+	"description": "Schema for RecipeDB service",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"author": "Steve-o <fnjordy@gmail.com>",
+	"license": "MIT",
+	"private": false,
+	"allowScripts": {
+		"@dsbunny/error-schema": true,
+		"@dsbunny/recipe-schema": true
+	},
+	"scripts": {
+		"build": "tsc",
+		"clean": "rm -rf dist node_modules package-lock.json",
+		"pull:upstream": "./scripts/pull-upstream.sh",
+		"rebuild": "npm run clean && npm run pull:upstream && npm install && npm run build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"@dsbunny/error-schema": "github:dsbunny/error-schema#86d038b",
+		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#77d1c17",
+		"typescript": "^5.9.3",
+		"zod": "^4.3.6"
+	},
+	"peerDependencies": {
+		"@dsbunny/error-schema": "github:dsbunny/error-schema",
+		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema",
+		"zod": "^4.3.0"
+	}
+}
