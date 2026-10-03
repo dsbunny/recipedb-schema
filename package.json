@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@dsbunny/error-schema": "github:dsbunny/error-schema#86d038b",
-		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#77d1c17",
+		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#000e141",
 		"typescript": "^5.9.3",
 		"zod": "^4.3.6"
 	},
