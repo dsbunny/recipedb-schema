@@ -342,6 +342,8 @@ export declare const ListRecipesResponseSchema: z.ZodObject<{
             enableLoopback: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         create_timestamp: z.ZodISODateTime;
+        modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
     }, z.core.$strip>>;
     next_token: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -708,6 +710,8 @@ export declare const GetRecipeResponseSchema: z.ZodObject<{
         enableLoopback: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     create_timestamp: z.ZodISODateTime;
+    modify_timestamp: z.ZodISODateTime;
+    expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
 }, z.core.$strip>;
 export type GetRecipeResponse = z.infer<typeof GetRecipeResponseSchema>;
 export declare const GetRecipeLinkRequestSchema: z.ZodObject<{}, z.core.$strip>;
@@ -2129,6 +2133,8 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         enableLoopback: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     create_timestamp: z.ZodISODateTime;
+    modify_timestamp: z.ZodISODateTime;
+    expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
 }, z.core.$strip>, z.ZodObject<{
     "@type": z.ZodLiteral<"RecipeLink">;
     recipe_id: z.ZodUUID;
@@ -2483,6 +2489,8 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
             enableLoopback: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         create_timestamp: z.ZodISODateTime;
+        modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
     }, z.core.$strip>>;
     next_token: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{

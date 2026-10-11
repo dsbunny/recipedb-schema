@@ -37,7 +37,12 @@ export const GetRecipeLinkResponseSchema = RecipeSchema.RecipeLinkSchema
     .describe('Get recipe link response schema');
 // #endregion
 // #region Create Recipe
-export const RecipeInputSchema = RecipeSchema.RecipeSchema.omit({ id: true, create_timestamp: true })
+export const RecipeInputSchema = RecipeSchema.RecipeSchema.omit({
+    id: true,
+    create_timestamp: true,
+    modify_timestamp: true,
+    expiry_timestamp: true,
+})
     .describe('Input schema for a recipe without the ID.');
 export const CreateRecipeRequestSchema = z.object({
     tenant_id: z.uuid()

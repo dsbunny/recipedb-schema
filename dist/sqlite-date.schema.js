@@ -5,4 +5,9 @@ import * as z from "zod";
 export const SqliteDateSchema = z.string().transform((date) => {
     return `${date.replace(' ', 'T')}.000Z`;
 });
+// ISO 8601 to SQL date string,
+// e.g. "2023-10-15T15:09:50.000Z" to "2023-10-15 15:09:50"
+export const IsoDateSchema = z.string().transform((date) => {
+    return date.replace('T', ' ').replace('.000Z', '');
+});
 //# sourceMappingURL=sqlite-date.schema.js.map

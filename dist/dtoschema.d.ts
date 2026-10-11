@@ -344,6 +344,8 @@ export declare const RecipeRecordSchema: z.ZodObject<{
             enableLoopback: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         create_timestamp: z.ZodISODateTime;
+        modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
     }, z.core.$strip>;
     recipe_link: z.ZodObject<{
         "@type": z.ZodLiteral<"RecipeLink">;
@@ -713,6 +715,8 @@ export declare const DbDtoFromRecipeRecordSchema: z.ZodPipe<z.ZodObject<{
             enableLoopback: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         create_timestamp: z.ZodISODateTime;
+        modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodOptional<z.ZodISODateTime>;
     }, z.core.$strip>;
     recipe_link: z.ZodObject<{
         "@type": z.ZodLiteral<"RecipeLink">;
@@ -965,6 +969,7 @@ export declare const DbDtoFromRecipeRecordSchema: z.ZodPipe<z.ZodObject<{
             } | undefined;
         }[];
         create_timestamp: string;
+        modify_timestamp: string;
         $defs?: Record<string, {
             "@type": "Playlist";
             entries: ({
@@ -1070,6 +1075,7 @@ export declare const DbDtoFromRecipeRecordSchema: z.ZodPipe<z.ZodObject<{
             }[];
             enableLoopback?: boolean | undefined;
         } | undefined;
+        expiry_timestamp?: string | undefined;
     };
     recipe_link: {
         "@type": "RecipeLink";
@@ -1323,6 +1329,7 @@ export declare const DbDtoToRecipeRecordSchema: z.ZodPipe<z.ZodObject<{
             } | undefined;
         }[];
         create_timestamp: string;
+        modify_timestamp: string;
         $defs?: Record<string, {
             "@type": "Playlist";
             entries: ({
@@ -1428,6 +1435,7 @@ export declare const DbDtoToRecipeRecordSchema: z.ZodPipe<z.ZodObject<{
             }[];
             enableLoopback?: boolean | undefined;
         } | undefined;
+        expiry_timestamp?: string | undefined;
     };
     recipe_link: {
         "@type": "RecipeLink";

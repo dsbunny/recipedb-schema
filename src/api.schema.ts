@@ -51,7 +51,12 @@ export type GetRecipeLinkResponse = z.infer<typeof GetRecipeLinkResponseSchema>;
 // #endregion
 
 // #region Create Recipe
-export const RecipeInputSchema = RecipeSchema.RecipeSchema.omit({ id: true, create_timestamp: true })
+export const RecipeInputSchema = RecipeSchema.RecipeSchema.omit({
+	id: true,
+	create_timestamp: true,
+	modify_timestamp: true,
+	expiry_timestamp: true,
+})
 	.describe('Input schema for a recipe without the ID.');
 export type RecipeInput = z.infer<typeof RecipeInputSchema>;
 
