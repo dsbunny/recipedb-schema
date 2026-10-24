@@ -6,7 +6,9 @@ set -e
 
 UPSTREAM_REPO_PATH="../melanie/packages/recipedb-schema"
 ERROR_SCHEMA_COMMIT=$(cd ../error-schema && git rev-parse --short HEAD)
+NET_SCHEMA_COMMIT=$(cd ../net-schema && git rev-parse --short HEAD)
 RECIPE_SCHEMA_COMMIT=$(cd ../recipe-schema && git rev-parse --short HEAD)
+ZOD_REGISTRY_COMMIT=$(cd ../zod-registry && git rev-parse --short HEAD)
 
 rsync -av --delete "$UPSTREAM_REPO_PATH/src/." "src/."
 rsync -av --delete \
@@ -21,12 +23,18 @@ rsync -av --delete \
 jq \
 	--tab \
 	--arg error_commit "$ERROR_SCHEMA_COMMIT" \
+	--arg net_commit "$NET_SCHEMA_COMMIT" \
 	--arg recipe_commit "$RECIPE_SCHEMA_COMMIT" \
+	--arg registry_commit "$ZOD_REGISTRY_COMMIT" \
 	'
 	.peerDependencies["@dsbunny/error-schema"]	= "github:dsbunny/error-schema"				|
+	.peerDependencies["@dsbunny/net-schema"]	= "github:dsbunny/net-schema"				|
 	.peerDependencies["@dsbunny/recipe-schema"]	= "github:dsbunny/recipe-schema"			|
+	.peerDependencies["@dsbunny/zod-registry"]	= "github:dsbunny/zod-registry"				|
 	.devDependencies["@dsbunny/error-schema"]	= ("github:dsbunny/error-schema#" + $error_commit)	|
-	.devDependencies["@dsbunny/recipe-schema"]	= ("github:dsbunny/recipe-schema#" + $recipe_commit)
+	.devDependencies["@dsbunny/net-schema"]		= ("github:dsbunny/net-schema#" + $net_commit)		|
+	.devDependencies["@dsbunny/recipe-schema"]	= ("github:dsbunny/recipe-schema#" + $recipe_commit)	|
+	.devDependencies["@dsbunny/zod-registry"]	= ("github:dsbunny/zod-registry#" + $registry_commit)
 	' package.json | sponge package.json
 
 jq '.devDependencies | with_entries(select(.key | test("^@dsbunny/.*-schema$")))' package.json

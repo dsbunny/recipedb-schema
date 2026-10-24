@@ -1,6 +1,6 @@
 {
 	"name": "@dsbunny/recipedb-schema",
-	"version": "2.1.2",
+	"version": "3.1.4",
 	"description": "Schema for RecipeDB service",
 	"type": "module",
 	"main": "dist/index.js",
@@ -20,14 +20,18 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
-		"@dsbunny/error-schema": "github:dsbunny/error-schema#86d038b",
-		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#284d78e",
+		"@dsbunny/error-schema": "github:dsbunny/error-schema#5308be6",
+		"@dsbunny/net-schema": "github:dsbunny/net-schema#7b9cf74",
+		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#a6c8160",
+		"@dsbunny/zod-registry": "github:dsbunny/zod-registry#35c7ef6",
 		"typescript": "^5.9.3",
 		"zod": "^4.3.6"
 	},
 	"peerDependencies": {
 		"@dsbunny/error-schema": "github:dsbunny/error-schema",
+		"@dsbunny/net-schema": "github:dsbunny/net-schema",
 		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema",
+		"@dsbunny/zod-registry": "github:dsbunny/zod-registry",
 		"zod": "^4.3.0"
 	}
 }
