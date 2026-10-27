@@ -4,21 +4,9 @@ export declare const CanvasViewportSchema: z.ZodObject<{
     viewport_ids: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export type CanvasViewport = z.infer<typeof CanvasViewportSchema>;
-export declare const CanvasViewportsSchema: z.ZodArray<z.ZodObject<{
+export declare const CanvasViewportArraySchema: z.ZodArray<z.ZodObject<{
     canvas_id: z.ZodUUID;
     viewport_ids: z.ZodArray<z.ZodString>;
-}, z.core.$strip>>;
-export declare const RecipeInputCanvasViewportSchema: z.ZodObject<{
-    canvas_id: z.ZodUUID;
-    viewport_ids: z.ZodArray<z.ZodString>;
-    is_latest: z.ZodBoolean;
-    is_active: z.ZodBoolean;
-}, z.core.$strip>;
-export declare const RecipeInputCanvasViewportsSchema: z.ZodArray<z.ZodObject<{
-    canvas_id: z.ZodUUID;
-    viewport_ids: z.ZodArray<z.ZodString>;
-    is_latest: z.ZodBoolean;
-    is_active: z.ZodBoolean;
 }, z.core.$strip>>;
 export declare const RecipeInputSchema: z.ZodObject<{
     transition: z.ZodObject<{
@@ -369,8 +357,6 @@ export declare const RecipeInputRecordSchema: z.ZodObject<{
     canvas_viewports: z.ZodArray<z.ZodObject<{
         canvas_id: z.ZodUUID;
         viewport_ids: z.ZodArray<z.ZodString>;
-        is_latest: z.ZodBoolean;
-        is_active: z.ZodBoolean;
     }, z.core.$strip>>;
     playlist_ids: z.ZodArray<z.ZodUUID>;
     asset_ids: z.ZodArray<z.ZodUUID>;
@@ -1124,8 +1110,6 @@ export declare const ListRecipeInputsResponseSchema: z.ZodObject<{
         canvas_viewports: z.ZodArray<z.ZodObject<{
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
-            is_latest: z.ZodBoolean;
-            is_active: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;
@@ -2265,8 +2249,6 @@ export declare const GetRecipeInputResponseSchema: z.ZodObject<{
     canvas_viewports: z.ZodArray<z.ZodObject<{
         canvas_id: z.ZodUUID;
         viewport_ids: z.ZodArray<z.ZodString>;
-        is_latest: z.ZodBoolean;
-        is_active: z.ZodBoolean;
     }, z.core.$strip>>;
     playlist_ids: z.ZodArray<z.ZodUUID>;
     asset_ids: z.ZodArray<z.ZodUUID>;
@@ -3779,8 +3761,6 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
     canvas_viewports: z.ZodArray<z.ZodObject<{
         canvas_id: z.ZodUUID;
         viewport_ids: z.ZodArray<z.ZodString>;
-        is_latest: z.ZodBoolean;
-        is_active: z.ZodBoolean;
     }, z.core.$strip>>;
     playlist_ids: z.ZodArray<z.ZodUUID>;
     asset_ids: z.ZodArray<z.ZodUUID>;
@@ -4131,8 +4111,6 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         canvas_viewports: z.ZodArray<z.ZodObject<{
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
-            is_latest: z.ZodBoolean;
-            is_active: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;

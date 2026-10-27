@@ -13,31 +13,17 @@ export const CanvasViewportSchema = z.object({
     id: 'CanvasViewportSchema',
     description: 'Canvas and its viewport identifiers',
 });
-export const CanvasViewportsSchema = z.array(CanvasViewportSchema).min(1)
+export const CanvasViewportArraySchema = z.array(CanvasViewportSchema).min(1)
     .refine(canvas_viewports => new Set(canvas_viewports.map(({ canvas_id }) => canvas_id)).size === canvas_viewports.length, 'Canvas identifiers must be unique.').register(dsbunnyRegistry, {
-    id: 'CanvasViewportsSchema',
+    id: 'CanvasViewportArraySchema',
     description: 'Array of canvas-to-viewport mappings',
-});
-export const RecipeInputCanvasViewportSchema = CanvasViewportSchema.extend({
-    is_latest: z.boolean()
-        .describe('Whether this input is the latest input for the canvas'),
-    is_active: z.boolean()
-        .describe('Whether this input is latest for the canvas and has not expired'),
-}).register(dsbunnyRegistry, {
-    id: 'RecipeInputCanvasViewportSchema',
-    description: 'Canvas and its viewport identifiers with latest and active status'
-});
-export const RecipeInputCanvasViewportsSchema = z.array(RecipeInputCanvasViewportSchema).min(1)
-    .refine(canvas_viewports => new Set(canvas_viewports.map(({ canvas_id }) => canvas_id)).size === canvas_viewports.length, 'Canvas identifiers must be unique.').register(dsbunnyRegistry, {
-    id: 'RecipeInputCanvasViewportsSchema',
-    description: 'Array of canvas-to-viewport mappings with latest and active status',
 });
 export const RecipeInputSchema = RecipeSchema.RecipeBaseSchema.extend({
     publish_id: z.uuid()
         .describe('Publish identifier'),
     publisher_identity: z.string().min(1).max(256)
         .describe('Identity of the publishing user'),
-    canvas_viewports: CanvasViewportsSchema,
+    canvas_viewports: CanvasViewportArraySchema,
 }).register(dsbunnyRegistry, {
     id: 'RecipeInputSchema',
     description: 'Shared input for all outputs created by one publish',
@@ -46,7 +32,7 @@ export const RecipeInputRecordSchema = z.object({
     tenant_id: z.uuid(),
     publish_id: z.uuid(),
     publisher_identity: z.string(),
-    canvas_viewports: RecipeInputCanvasViewportsSchema,
+    canvas_viewports: CanvasViewportArraySchema,
     playlist_ids: z.array(z.uuid()),
     asset_ids: z.array(z.uuid()),
     recipe_data: RecipeSchema.RecipeBaseSchema,
