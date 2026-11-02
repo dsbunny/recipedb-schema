@@ -2,6 +2,7 @@
 import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
 import { ErrorResponseSchema } from "@dsbunny/error-schema";
+import { JsonPatchOperationSchema } from '@dsbunny/patch-schema';
 import { RecipeSchema } from "@dsbunny/recipe-schema";
 export const CanvasViewportSchema = z.object({
     canvas_id: z.uuid()
@@ -17,6 +18,25 @@ export const CanvasViewportArraySchema = z.array(CanvasViewportSchema).min(1)
     .refine(canvas_viewports => new Set(canvas_viewports.map(({ canvas_id }) => canvas_id)).size === canvas_viewports.length, 'Canvas identifiers must be unique.').register(dsbunnyRegistry, {
     id: 'CanvasViewportArraySchema',
     description: 'Array of canvas-to-viewport mappings',
+});
+export const PlaylistInputSchema = RecipeSchema.PlaylistSchema.pick({
+    "@type": true,
+    name: true,
+    tags: true,
+    entries: true,
+}).register(dsbunnyRegistry, {
+    id: 'PlaylistInputSchema',
+    description: 'Playlist input',
+});
+export const PlaylistRecordSchema = RecipeSchema.PlaylistSchema.extend({
+    tenant_id: z.uuid(),
+    is_staging: z.boolean()
+        .describe('Indicates if the playlist is in staging mode, i.e., not yet published'),
+    create_timestamp: z.iso.datetime(),
+    modify_timestamp: z.iso.datetime(),
+}).register(dsbunnyRegistry, {
+    id: 'PlaylistRecordSchema',
+    description: 'Playlist record',
 });
 export const RecipeInputSchema = RecipeSchema.RecipeBaseSchema.extend({
     publish_id: z.uuid()
@@ -171,6 +191,87 @@ export const CreateRecipeResponseSchema = z.object({
     id: 'CreateRecipeResponseSchema',
     description: 'Create recipe response schema',
 });
+// #region Playlist
+export const CreatePlaylistRequestSchema = z.object({
+    tenant_id: z.uuid()
+        .describe('Tenant ID'),
+    playlist_input: PlaylistInputSchema
+        .describe('Assets for the playlist'),
+}).register(dsbunnyRegistry, {
+    id: 'CreatePlaylistRequestSchema',
+    description: 'Create playlist request schema',
+});
+export const CreatePlaylistResponseSchema = z.object({
+    playlist_id: z.uuid()
+        .describe('ID of the created playlist'),
+    create_timestamp: z.iso.datetime()
+        .describe('Timestamp of when the playlist was created'),
+}).register(dsbunnyRegistry, {
+    id: 'CreatePlaylistResponseSchema',
+    description: 'Create playlist response schema',
+});
+export const GetPlaylistRequestSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistRequestSchema',
+    description: 'Get playlist request schema',
+});
+export const GetPlaylistResponseSchema = PlaylistRecordSchema.register(dsbunnyRegistry, {
+    id: 'GetPlaylistResponseSchema',
+    description: 'Get playlist response schema',
+});
+export const PatchPlaylistRequestSchema = z.array(JsonPatchOperationSchema).max(50).register(dsbunnyRegistry, {
+    id: 'PatchPlaylistRequestSchema',
+    description: 'Patch playlist request schema',
+});
+export const PatchPlaylistResponseSchema = PlaylistRecordSchema.register(dsbunnyRegistry, {
+    id: 'PatchPlaylistResponseSchema',
+    description: 'Patch playlist response schema',
+});
+export const DeletePlaylistRequestSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'DeletePlaylistRequestSchema',
+    description: 'Delete playlist request schema',
+});
+export const DeletePlaylistResponseSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'DeletePlaylistResponseSchema',
+    description: 'Delete playlist response schema',
+});
+export const ListPlaylistsRequestSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'ListPlaylistsRequestSchema',
+    description: 'List playlists request schema',
+});
+export const ListPlaylistsResponseSchema = z.object({
+    playlist_records: z.array(PlaylistRecordSchema)
+        .describe('List of playlists for the tenant'),
+    next_token: z.string().nullable(),
+}).register(dsbunnyRegistry, {
+    id: 'ListPlaylistsResponseSchema',
+    description: 'List playlists response schema',
+});
+export const GetPlaylistSuggestionsRequestSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistSuggestionsRequestSchema',
+    description: 'Get playlist suggestions request schema',
+});
+export const GetPlaylistSuggestionsResponseSchema = z.object({
+    c: z.tuple([z.string(), z.string().nullable()])
+        .describe('Playlist name auto-complete for given prefix'),
+    s: z.array(z.tuple([z.string(), z.string().nullable()]))
+        .describe('Playlist name suggestions for given input'),
+}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistSuggestionsResponseSchema',
+    description: 'Get playlist suggestions response schema',
+});
+export const GetPlaylistAvailabilityRequestSchema = z.object({}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistAvailabilityRequestSchema',
+    description: 'Get playlist availability request schema',
+});
+export const GetPlaylistAvailabilityResponseSchema = z.object({
+    is_available: z.boolean()
+        .describe('Indicates if the playlist name is available'),
+}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistAvailabilityResponseSchema',
+    description: 'Get playlist availability response schema',
+});
+// #endregion
+// #region APIs
 export const RecipeDbRequestSchema = z.union([
     CreateRecipeRequestSchema,
     GetRecipeRequestSchema,
@@ -178,6 +279,11 @@ export const RecipeDbRequestSchema = z.union([
     GetRecipeInputRequestSchema,
     ListRecipeInputsRequestSchema,
     ListRecipesRequestSchema,
+    CreatePlaylistRequestSchema,
+    GetPlaylistRequestSchema,
+    ListPlaylistsRequestSchema,
+    GetPlaylistSuggestionsRequestSchema,
+    GetPlaylistAvailabilityRequestSchema,
 ]).register(dsbunnyRegistry, {
     id: 'RecipeDbRequestSchema',
     description: 'RecipeDB request schema',
@@ -189,9 +295,15 @@ export const RecipeDbResponseSchema = z.union([
     GetRecipeInputResponseSchema,
     ListRecipeInputsResponseSchema,
     ListRecipesResponseSchema,
+    CreatePlaylistResponseSchema,
+    GetPlaylistResponseSchema,
+    ListPlaylistsResponseSchema,
+    GetPlaylistSuggestionsResponseSchema,
+    GetPlaylistAvailabilityResponseSchema,
     ErrorResponseSchema,
 ]).register(dsbunnyRegistry, {
     id: 'RecipeDbResponseSchema',
     description: 'RecipeDB response schema',
 });
+// #endregion
 //# sourceMappingURL=api.schema.js.map

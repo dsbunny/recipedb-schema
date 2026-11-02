@@ -1,4 +1,11 @@
 # Changelog
+## v4.1.6
+- Add Webhook schema supporting _playlist_ notifications.
+
+## v4.0.5
+- Breaking `Recipe` schemas change for `id` renames.
+- Add CRUD API for _playlists_.
+
 ## v3.1.4
 - Add `id` _ZOD_ metadata for schemas.
 

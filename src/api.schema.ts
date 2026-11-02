@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
 import { ErrorResponseSchema } from "@dsbunny/error-schema";
+import { JsonPatchOperationSchema } from '@dsbunny/patch-schema';
 import { RecipeSchema } from "@dsbunny/recipe-schema";
 
 export const CanvasViewportSchema = z.object({
@@ -25,6 +26,29 @@ export const CanvasViewportArraySchema = z.array(CanvasViewportSchema).min(1)
 		id: 'CanvasViewportArraySchema',
 		description: 'Array of canvas-to-viewport mappings',
 	});
+
+export const PlaylistInputSchema = RecipeSchema.PlaylistSchema.pick({
+	"@type": true,
+	name: true,
+	tags: true,
+	entries: true,
+}).register(dsbunnyRegistry, {
+	id: 'PlaylistInputSchema',
+	description: 'Playlist input',
+});
+export type PlaylistInput = z.infer<typeof PlaylistInputSchema>;
+
+export const PlaylistRecordSchema = RecipeSchema.PlaylistSchema.extend({
+	tenant_id: z.uuid(),
+	is_staging: z.boolean()
+		.describe('Indicates if the playlist is in staging mode, i.e., not yet published'),
+	create_timestamp: z.iso.datetime(),
+	modify_timestamp: z.iso.datetime(),
+}).register(dsbunnyRegistry, {
+	id: 'PlaylistRecordSchema',
+	description: 'Playlist record',
+});
+export type PlaylistRecord = z.infer<typeof PlaylistRecordSchema>;
 
 export const RecipeInputSchema = RecipeSchema.RecipeBaseSchema.extend({
 	publish_id: z.uuid()
@@ -207,6 +231,108 @@ export const CreateRecipeResponseSchema = z.object({
 });
 export type CreateRecipeResponse = z.infer<typeof CreateRecipeResponseSchema>;
 
+// #region Playlist
+export const CreatePlaylistRequestSchema = z.object({
+	tenant_id: z.uuid()
+		.describe('Tenant ID'),
+	playlist_input: PlaylistInputSchema
+		.describe('Assets for the playlist'),
+}).register(dsbunnyRegistry, {
+	id: 'CreatePlaylistRequestSchema',
+	description: 'Create playlist request schema',
+});
+export type CreatePlaylistRequest = z.infer<typeof CreatePlaylistRequestSchema>;
+export const CreatePlaylistResponseSchema = z.object({
+	playlist_id: z.uuid()
+		.describe('ID of the created playlist'),
+	create_timestamp: z.iso.datetime()
+		.describe('Timestamp of when the playlist was created'),
+}).register(dsbunnyRegistry, {
+	id: 'CreatePlaylistResponseSchema',
+	description: 'Create playlist response schema',
+});
+export type CreatePlaylistResponse = z.infer<typeof CreatePlaylistResponseSchema>;
+
+export const GetPlaylistRequestSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistRequestSchema',
+	description: 'Get playlist request schema',
+});
+export type GetPlaylistRequest = z.infer<typeof GetPlaylistRequestSchema>;
+export const GetPlaylistResponseSchema = PlaylistRecordSchema.register(dsbunnyRegistry, {
+	id: 'GetPlaylistResponseSchema',
+	description: 'Get playlist response schema',
+});
+export type GetPlaylistResponse = z.infer<typeof GetPlaylistResponseSchema>;
+
+export const PatchPlaylistRequestSchema = z.array(JsonPatchOperationSchema).max(50).register(dsbunnyRegistry, {
+	id: 'PatchPlaylistRequestSchema',
+	description: 'Patch playlist request schema',
+});
+export type PatchPlaylistRequest = z.infer<typeof PatchPlaylistRequestSchema>;
+export const PatchPlaylistResponseSchema = PlaylistRecordSchema.register(dsbunnyRegistry, {
+	id: 'PatchPlaylistResponseSchema',
+	description: 'Patch playlist response schema',
+});
+export type PatchPlaylistResponse = z.infer<typeof PatchPlaylistResponseSchema>;
+
+export const DeletePlaylistRequestSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'DeletePlaylistRequestSchema',
+	description: 'Delete playlist request schema',
+});
+export type DeletePlaylistRequest = z.infer<typeof DeletePlaylistRequestSchema>;
+export const DeletePlaylistResponseSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'DeletePlaylistResponseSchema',
+	description: 'Delete playlist response schema',
+});
+export type DeletePlaylistResponse = z.infer<typeof DeletePlaylistResponseSchema>;
+
+export const ListPlaylistsRequestSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'ListPlaylistsRequestSchema',
+	description: 'List playlists request schema',
+});
+export type ListPlaylistsRequest = z.infer<typeof ListPlaylistsRequestSchema>;
+export const ListPlaylistsResponseSchema = z.object({
+	playlist_records: z.array(PlaylistRecordSchema)
+		.describe('List of playlists for the tenant'),
+	next_token: z.string().nullable(),
+}).register(dsbunnyRegistry, {
+	id: 'ListPlaylistsResponseSchema',
+	description: 'List playlists response schema',
+});
+export type ListPlaylistsResponse = z.infer<typeof ListPlaylistsResponseSchema>;
+
+export const GetPlaylistSuggestionsRequestSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistSuggestionsRequestSchema',
+	description: 'Get playlist suggestions request schema',
+});
+export type GetPlaylistSuggestionsRequest = z.infer<typeof GetPlaylistSuggestionsRequestSchema>;
+export const GetPlaylistSuggestionsResponseSchema = z.object({
+	c: z.tuple([z.string(), z.string().nullable()])
+		.describe('Playlist name auto-complete for given prefix'),
+	s: z.array(z.tuple([z.string(), z.string().nullable()]))
+		.describe('Playlist name suggestions for given input'),
+}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistSuggestionsResponseSchema',
+	description: 'Get playlist suggestions response schema',
+});
+export type GetPlaylistSuggestionsResponse = z.infer<typeof GetPlaylistSuggestionsResponseSchema>;
+
+export const GetPlaylistAvailabilityRequestSchema = z.object({}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistAvailabilityRequestSchema',
+	description: 'Get playlist availability request schema',
+});
+export type GetPlaylistAvailabilityRequest = z.infer<typeof GetPlaylistAvailabilityRequestSchema>;
+export const GetPlaylistAvailabilityResponseSchema = z.object({
+	is_available: z.boolean()
+		.describe('Indicates if the playlist name is available'),
+}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistAvailabilityResponseSchema',
+	description: 'Get playlist availability response schema',
+});
+export type GetPlaylistAvailabilityResponse = z.infer<typeof GetPlaylistAvailabilityResponseSchema>;
+// #endregion
+
+// #region APIs
 export const RecipeDbRequestSchema = z.union([
 	CreateRecipeRequestSchema,
 	GetRecipeRequestSchema,
@@ -214,6 +340,11 @@ export const RecipeDbRequestSchema = z.union([
 	GetRecipeInputRequestSchema,
 	ListRecipeInputsRequestSchema,
 	ListRecipesRequestSchema,
+	CreatePlaylistRequestSchema,
+	GetPlaylistRequestSchema,
+	ListPlaylistsRequestSchema,
+	GetPlaylistSuggestionsRequestSchema,
+	GetPlaylistAvailabilityRequestSchema,
 ]).register(dsbunnyRegistry, {
 	id: 'RecipeDbRequestSchema',
 	description: 'RecipeDB request schema',
@@ -227,9 +358,15 @@ export const RecipeDbResponseSchema = z.union([
 	GetRecipeInputResponseSchema,
 	ListRecipeInputsResponseSchema,
 	ListRecipesResponseSchema,
+	CreatePlaylistResponseSchema,
+	GetPlaylistResponseSchema,
+	ListPlaylistsResponseSchema,
+	GetPlaylistSuggestionsResponseSchema,
+	GetPlaylistAvailabilityResponseSchema,
 	ErrorResponseSchema,
 ]).register(dsbunnyRegistry, {
 	id: 'RecipeDbResponseSchema',
 	description: 'RecipeDB response schema',
 });
 export type RecipeDbResponse = z.infer<typeof RecipeDbResponseSchema>;
+// #endregion
