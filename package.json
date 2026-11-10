@@ -1,6 +1,6 @@
 {
 	"name": "@dsbunny/recipedb-schema",
-	"version": "4.1.6",
+	"version": "4.2.7",
 	"description": "Schema for RecipeDB service",
 	"type": "module",
 	"main": "dist/index.js",
@@ -22,8 +22,9 @@
 	"devDependencies": {
 		"@dsbunny/error-schema": "github:dsbunny/error-schema#5308be6",
 		"@dsbunny/patch-schema": "github:dsbunny/patch-schema#97d7952",
+		"@dsbunny/publisher-schema": "github:dsbunny/publisher-schema#f2d4e75",
 		"@dsbunny/net-schema": "github:dsbunny/net-schema#7b9cf74",
-		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#523f84a",
+		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema#e3b0772",
 		"@dsbunny/webhook-schema": "github:dsbunny/webhook-schema#",
 		"@dsbunny/zod-registry": "github:dsbunny/zod-registry#35c7ef6",
 		"typescript": "^5.9.3",
@@ -32,6 +33,7 @@
 	"peerDependencies": {
 		"@dsbunny/error-schema": "github:dsbunny/error-schema",
 		"@dsbunny/patch-schema": "github:dsbunny/patch-schema",
+		"@dsbunny/publisher-schema": "github:dsbunny/publisher-schema",
 		"@dsbunny/net-schema": "github:dsbunny/net-schema",
 		"@dsbunny/recipe-schema": "github:dsbunny/recipe-schema",
 		"@dsbunny/webhook-schema": "github:dsbunny/webhook-schema",

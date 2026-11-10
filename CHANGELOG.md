@@ -1,4 +1,8 @@
 # Changelog
+## v4.2.7
+- Add `@dsbunny/publisher-schema` dependency to use _recipe templates_.
+- Add a `POST` endpoint to query existing playlists given a _playlist template_.
+
 ## v4.1.6
 - Add Webhook schema supporting _playlist_ notifications.
 

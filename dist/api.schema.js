@@ -3,6 +3,7 @@ import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
 import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import { JsonPatchOperationSchema } from '@dsbunny/patch-schema';
+import { RecipeTemplateSchema } from "@dsbunny/publisher-schema";
 import { RecipeSchema } from "@dsbunny/recipe-schema";
 export const CanvasViewportSchema = z.object({
     canvas_id: z.uuid()
@@ -19,19 +20,14 @@ export const CanvasViewportArraySchema = z.array(CanvasViewportSchema).min(1)
     id: 'CanvasViewportArraySchema',
     description: 'Array of canvas-to-viewport mappings',
 });
-export const PlaylistInputSchema = RecipeSchema.PlaylistSchema.pick({
-    "@type": true,
-    name: true,
-    tags: true,
-    entries: true,
+export const PlaylistInputSchema = RecipeSchema.PlaylistSchema.omit({
+    playlist_id: true,
 }).register(dsbunnyRegistry, {
     id: 'PlaylistInputSchema',
-    description: 'Playlist input',
+    description: 'Input for creating a playlist',
 });
 export const PlaylistRecordSchema = RecipeSchema.PlaylistSchema.extend({
     tenant_id: z.uuid(),
-    is_staging: z.boolean()
-        .describe('Indicates if the playlist is in staging mode, i.e., not yet published'),
     create_timestamp: z.iso.datetime(),
     modify_timestamp: z.iso.datetime(),
 }).register(dsbunnyRegistry, {
@@ -195,7 +191,7 @@ export const CreateRecipeResponseSchema = z.object({
 export const CreatePlaylistRequestSchema = z.object({
     tenant_id: z.uuid()
         .describe('Tenant ID'),
-    playlist_input: PlaylistInputSchema
+    playlist_input: RecipeSchema.PlaylistSchema
         .describe('Assets for the playlist'),
 }).register(dsbunnyRegistry, {
     id: 'CreatePlaylistRequestSchema',
@@ -245,6 +241,19 @@ export const ListPlaylistsResponseSchema = z.object({
 }).register(dsbunnyRegistry, {
     id: 'ListPlaylistsResponseSchema',
     description: 'List playlists response schema',
+});
+export const QueryPlaylistByTemplateRequestSchema = z.object({
+    tenant_id: z.uuid()
+        .describe('Tenant ID'),
+    playlist_template: RecipeTemplateSchema.PlaylistTemplateSchema
+        .describe('Assets for the playlist'),
+}).register(dsbunnyRegistry, {
+    id: 'QueryPlaylistByTemplateRequestSchema',
+    description: 'Query playlist by template request schema',
+});
+export const QueryPlaylistByTemplateResponseSchema = RecipeSchema.PlaylistSchema.register(dsbunnyRegistry, {
+    id: 'QueryPlaylistByTemplateResponseSchema',
+    description: 'Query playlist by template response schema',
 });
 export const GetPlaylistSuggestionsRequestSchema = z.object({}).register(dsbunnyRegistry, {
     id: 'GetPlaylistSuggestionsRequestSchema',
