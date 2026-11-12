@@ -13,6 +13,7 @@ export declare const RecipeDbWebhookRequestSchema: z.ZodObject<{
     tenant_id: z.ZodUUID;
     ref_id: z.ZodUUID;
     trace_id: z.ZodOptional<z.ZodString>;
+    '@type': z.ZodLiteral<"RecipeDbWebhookRequest">;
     class: z.ZodEnum<{
         playlist: "playlist";
     }>;
@@ -23,7 +24,11 @@ export declare const RecipeDbWebhookRequestSchema: z.ZodObject<{
     }>;
 }, z.core.$strip>;
 export type RecipeDbWebhookRequest = z.infer<typeof RecipeDbWebhookRequestSchema>;
-export declare const RecipeDbWebhookProgressSchema: z.ZodNull;
+export declare const RecipeDbWebhookProgressSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"RecipeDbWebhookProgress">;
+}, z.core.$strip>;
 export type RecipeDbWebhookProgress = z.infer<typeof RecipeDbWebhookProgressSchema>;
-export declare const RecipeDbWebhookResponseSchema: z.ZodObject<{}, z.core.$strip>;
+export declare const RecipeDbWebhookResponseSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"RecipeDbWebhookResponse">;
+}, z.core.$strip>;
 export type RecipeDbWebhookResponse = z.infer<typeof RecipeDbWebhookResponseSchema>;

@@ -1,4 +1,10 @@
 # Changelog
+## v5.0.8
+- Add `@type` fields to all schemas to enable discovery.
+- Nest schema structures to preserve `@type` values.
+- Mark _optional_ schema values for HTTP requests that typically do not include a _body_.
+- Move recipe template schemas into `recipedb-schema` and export them for Publisher use.
+
 ## v4.2.7
 - Add `@dsbunny/publisher-schema` dependency to use _recipe templates_.
 - Add a `POST` endpoint to query existing playlists given a _playlist template_.

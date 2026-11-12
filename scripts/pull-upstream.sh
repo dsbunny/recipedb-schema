@@ -31,7 +31,7 @@ jq \
 	--arg publisher_commit "$PUBLISHER_SCHEMA_COMMIT" \
 	--arg recipe_commit "$RECIPE_SCHEMA_COMMIT" \
 	--arg registry_commit "$ZOD_REGISTRY_COMMIT" \
-	--arg webhook_commit "$WEBHOOK_COMMIT" \
+	--arg webhook_commit "$WEBHOOK_SCHEMA_COMMIT" \
 	'
 	.peerDependencies["@dsbunny/error-schema"]	= "github:dsbunny/error-schema"				|
 	.peerDependencies["@dsbunny/net-schema"]	= "github:dsbunny/net-schema"				|

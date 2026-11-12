@@ -21,6 +21,8 @@ export const RecipeDbWebhookTypeSchema = z.enum(['new', 'change', 'delete']).reg
 export type RecipeDbWebhookType = z.infer<typeof RecipeDbWebhookTypeSchema>;
 
 export const RecipeDbWebhookRequestSchema = WebhookRequestSchema.extend({
+        '@type': z.literal('RecipeDbWebhookRequest')
+                .describe('Type of the RecipeDB webhook request object'),
         class: RecipeDbWebhookClassSchema,
         type: RecipeDbWebhookTypeSchema,
 }).register(dsbunnyRegistry, {
@@ -29,13 +31,19 @@ export const RecipeDbWebhookRequestSchema = WebhookRequestSchema.extend({
 });
 export type RecipeDbWebhookRequest = z.infer<typeof RecipeDbWebhookRequestSchema>;
 
-export const RecipeDbWebhookProgressSchema = WebhookProgressSchema.register(dsbunnyRegistry, {
+export const RecipeDbWebhookProgressSchema = WebhookProgressSchema.extend({
+        '@type': z.literal('RecipeDbWebhookProgress')
+                .describe('Type of the RecipeDB webhook progress object'),
+}).register(dsbunnyRegistry, {
         id: 'RecipeDbWebhookProgressSchema',
         description: 'RecipeDB webhook progress schema',
 });
 export type RecipeDbWebhookProgress = z.infer<typeof RecipeDbWebhookProgressSchema>;
 
-export const RecipeDbWebhookResponseSchema = WebhookResponseSchema.register(dsbunnyRegistry, {
+export const RecipeDbWebhookResponseSchema = WebhookResponseSchema.extend({
+        '@type': z.literal('RecipeDbWebhookResponse')
+                .describe('Type of the RecipeDB webhook response object'),
+}).register(dsbunnyRegistry, {
         id: 'RecipeDbWebhookResponseSchema',
         description: "RecipeDB webhook response schema",
 });
