@@ -1,4 +1,5 @@
 // vim: tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
+// `@type` field is optional for requests with no other required fields.
 
 import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
@@ -234,7 +235,7 @@ export type GetRecipeLinkResponse = z.infer<typeof GetRecipeLinkResponseSchema>;
 export const GetRecipeInputRequestSchema = z.object({
 	'@type': z.literal('GetRecipeInputRequest')
 		.describe('Type of the get recipe input request object'),
-}).register(dsbunnyRegistry, {
+}).optional().register(dsbunnyRegistry, {
 	id: 'GetRecipeInputRequestSchema',
 	description: 'Get recipe input request schema',
 });

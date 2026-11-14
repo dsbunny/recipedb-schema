@@ -2725,9 +2725,9 @@ export declare const GetRecipeLinkResponseSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetRecipeLinkResponse = z.infer<typeof GetRecipeLinkResponseSchema>;
-export declare const GetRecipeInputRequestSchema: z.ZodObject<{
+export declare const GetRecipeInputRequestSchema: z.ZodOptional<z.ZodObject<{
     '@type': z.ZodLiteral<"GetRecipeInputRequest">;
-}, z.core.$strip>;
+}, z.core.$strip>>;
 export type GetRecipeInputRequest = z.infer<typeof GetRecipeInputRequestSchema>;
 export declare const GetRecipeInputResponseSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"GetRecipeInputResponse">;
@@ -4575,9 +4575,9 @@ export declare const RecipeDbRequestSchema: z.ZodUnion<readonly [z.ZodObject<{
     '@type': z.ZodLiteral<"GetRecipeRequest">;
 }, z.core.$strip>>, z.ZodOptional<z.ZodObject<{
     '@type': z.ZodLiteral<"GetRecipeLinkRequest">;
-}, z.core.$strip>>, z.ZodObject<{
+}, z.core.$strip>>, z.ZodOptional<z.ZodObject<{
     '@type': z.ZodLiteral<"GetRecipeInputRequest">;
-}, z.core.$strip>, z.ZodObject<{
+}, z.core.$strip>>, z.ZodObject<{
     sort_dir: z.ZodOptional<z.ZodEnum<{
         asc: "asc";
         desc: "desc";
