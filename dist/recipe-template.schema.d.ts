@@ -173,3 +173,4 @@ export declare namespace RecipeTemplateSchema {
     }, z.core.$strip>;
     type RecipeTemplate = z.infer<typeof RecipeTemplateSchema>;
 }
+//# sourceMappingURL=recipe-template.schema.d.ts.map

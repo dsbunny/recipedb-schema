@@ -451,6 +451,51 @@ export declare const RecipeInputSchema: z.ZodObject<{
             times: z.ZodOptional<z.ZodNumber>;
             until: z.ZodOptional<z.ZodISODateTime>;
         }, z.core.$strip>>>;
+        excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            "@type": z.ZodLiteral<"RecurrenceRule">;
+            frequency: z.ZodEnum<{
+                secondly: "secondly";
+                minutely: "minutely";
+                hourly: "hourly";
+                daily: "daily";
+                weekly: "weekly";
+                monthly: "monthly";
+                yearly: "yearly";
+            }>;
+            interval: z.ZodOptional<z.ZodNumber>;
+            firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                mo: "mo";
+                tu: "tu";
+                we: "we";
+                th: "th";
+                fr: "fr";
+                sa: "sa";
+                su: "su";
+            }>>;
+            byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                day: z.ZodEnum<{
+                    mo: "mo";
+                    tu: "tu";
+                    we: "we";
+                    th: "th";
+                    fr: "fr";
+                    sa: "sa";
+                    su: "su";
+                }>;
+                nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+            }, z.core.$strip>>>;
+            byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+            timeZone: z.ZodOptional<z.ZodString>;
+            times: z.ZodOptional<z.ZodNumber>;
+            until: z.ZodOptional<z.ZodISODateTime>;
+        }, z.core.$strip>>>;
         onceOn: z.ZodOptional<z.ZodObject<{
             "@type": z.ZodLiteral<"DOMEvent">;
             type: z.ZodString;
@@ -847,6 +892,51 @@ export declare const RecipeInputRecordSchema: z.ZodObject<{
                 times: z.ZodOptional<z.ZodNumber>;
                 until: z.ZodOptional<z.ZodISODateTime>;
             }, z.core.$strip>>>;
+            excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                "@type": z.ZodLiteral<"RecurrenceRule">;
+                frequency: z.ZodEnum<{
+                    secondly: "secondly";
+                    minutely: "minutely";
+                    hourly: "hourly";
+                    daily: "daily";
+                    weekly: "weekly";
+                    monthly: "monthly";
+                    yearly: "yearly";
+                }>;
+                interval: z.ZodOptional<z.ZodNumber>;
+                firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                    mo: "mo";
+                    tu: "tu";
+                    we: "we";
+                    th: "th";
+                    fr: "fr";
+                    sa: "sa";
+                    su: "su";
+                }>>;
+                byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    day: z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>;
+                    nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                }, z.core.$strip>>>;
+                byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                timeZone: z.ZodOptional<z.ZodString>;
+                times: z.ZodOptional<z.ZodNumber>;
+                until: z.ZodOptional<z.ZodISODateTime>;
+            }, z.core.$strip>>>;
             onceOn: z.ZodOptional<z.ZodObject<{
                 "@type": z.ZodLiteral<"DOMEvent">;
                 type: z.ZodString;
@@ -1194,6 +1284,51 @@ export declare const RecipeOutputRecordSchema: z.ZodObject<{
                 }, z.core.$strip>]>>;
             }, z.core.$strip>;
             recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                "@type": z.ZodLiteral<"RecurrenceRule">;
+                frequency: z.ZodEnum<{
+                    secondly: "secondly";
+                    minutely: "minutely";
+                    hourly: "hourly";
+                    daily: "daily";
+                    weekly: "weekly";
+                    monthly: "monthly";
+                    yearly: "yearly";
+                }>;
+                interval: z.ZodOptional<z.ZodNumber>;
+                firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                    mo: "mo";
+                    tu: "tu";
+                    we: "we";
+                    th: "th";
+                    fr: "fr";
+                    sa: "sa";
+                    su: "su";
+                }>>;
+                byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    day: z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>;
+                    nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                }, z.core.$strip>>>;
+                byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                timeZone: z.ZodOptional<z.ZodString>;
+                times: z.ZodOptional<z.ZodNumber>;
+                until: z.ZodOptional<z.ZodISODateTime>;
+            }, z.core.$strip>>>;
+            excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 "@type": z.ZodLiteral<"RecurrenceRule">;
                 frequency: z.ZodEnum<{
                     secondly: "secondly";
@@ -1687,6 +1822,51 @@ export declare const ListRecipeInputsResponseSchema: z.ZodObject<{
                     times: z.ZodOptional<z.ZodNumber>;
                     until: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
                 onceOn: z.ZodOptional<z.ZodObject<{
                     "@type": z.ZodLiteral<"DOMEvent">;
                     type: z.ZodString;
@@ -2057,6 +2237,51 @@ export declare const ListRecipesResponseSchema: z.ZodObject<{
                     }, z.core.$strip>]>>;
                 }, z.core.$strip>;
                 recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     "@type": z.ZodLiteral<"RecurrenceRule">;
                     frequency: z.ZodEnum<{
                         secondly: "secondly";
@@ -2476,6 +2701,51 @@ export declare const GetRecipeResponseSchema: z.ZodObject<{
                     }, z.core.$strip>]>>;
                 }, z.core.$strip>;
                 recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     "@type": z.ZodLiteral<"RecurrenceRule">;
                     frequency: z.ZodEnum<{
                         secondly: "secondly";
@@ -2969,6 +3239,51 @@ export declare const GetRecipeInputResponseSchema: z.ZodObject<{
                     times: z.ZodOptional<z.ZodNumber>;
                     until: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
                 onceOn: z.ZodOptional<z.ZodObject<{
                     "@type": z.ZodLiteral<"DOMEvent">;
                     type: z.ZodString;
@@ -3309,6 +3624,51 @@ export declare const CreateRecipeRequestSchema: z.ZodObject<{
                 }, z.core.$strip>]>>;
             }, z.core.$strip>;
             recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                "@type": z.ZodLiteral<"RecurrenceRule">;
+                frequency: z.ZodEnum<{
+                    secondly: "secondly";
+                    minutely: "minutely";
+                    hourly: "hourly";
+                    daily: "daily";
+                    weekly: "weekly";
+                    monthly: "monthly";
+                    yearly: "yearly";
+                }>;
+                interval: z.ZodOptional<z.ZodNumber>;
+                firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                    mo: "mo";
+                    tu: "tu";
+                    we: "we";
+                    th: "th";
+                    fr: "fr";
+                    sa: "sa";
+                    su: "su";
+                }>>;
+                byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    day: z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>;
+                    nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                }, z.core.$strip>>>;
+                byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                timeZone: z.ZodOptional<z.ZodString>;
+                times: z.ZodOptional<z.ZodNumber>;
+                until: z.ZodOptional<z.ZodISODateTime>;
+            }, z.core.$strip>>>;
+            excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 "@type": z.ZodLiteral<"RecurrenceRule">;
                 frequency: z.ZodEnum<{
                     secondly: "secondly";
@@ -4413,6 +4773,51 @@ export declare const RecipeDbRequestSchema: z.ZodUnion<readonly [z.ZodObject<{
                 times: z.ZodOptional<z.ZodNumber>;
                 until: z.ZodOptional<z.ZodISODateTime>;
             }, z.core.$strip>>>;
+            excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                "@type": z.ZodLiteral<"RecurrenceRule">;
+                frequency: z.ZodEnum<{
+                    secondly: "secondly";
+                    minutely: "minutely";
+                    hourly: "hourly";
+                    daily: "daily";
+                    weekly: "weekly";
+                    monthly: "monthly";
+                    yearly: "yearly";
+                }>;
+                interval: z.ZodOptional<z.ZodNumber>;
+                firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                    mo: "mo";
+                    tu: "tu";
+                    we: "we";
+                    th: "th";
+                    fr: "fr";
+                    sa: "sa";
+                    su: "su";
+                }>>;
+                byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    day: z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>;
+                    nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                }, z.core.$strip>>>;
+                byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                timeZone: z.ZodOptional<z.ZodString>;
+                times: z.ZodOptional<z.ZodNumber>;
+                until: z.ZodOptional<z.ZodISODateTime>;
+            }, z.core.$strip>>>;
             onceOn: z.ZodOptional<z.ZodObject<{
                 "@type": z.ZodLiteral<"DOMEvent">;
                 type: z.ZodString;
@@ -4999,6 +5404,51 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
                     times: z.ZodOptional<z.ZodNumber>;
                     until: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
                 onceOn: z.ZodOptional<z.ZodObject<{
                     "@type": z.ZodLiteral<"DOMEvent">;
                     type: z.ZodString;
@@ -5392,6 +5842,51 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
                     }, z.core.$strip>]>>;
                 }, z.core.$strip>;
                 recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     "@type": z.ZodLiteral<"RecurrenceRule">;
                     frequency: z.ZodEnum<{
                         secondly: "secondly";
@@ -5830,6 +6325,51 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
                     times: z.ZodOptional<z.ZodNumber>;
                     until: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
                 onceOn: z.ZodOptional<z.ZodObject<{
                     "@type": z.ZodLiteral<"DOMEvent">;
                     type: z.ZodString;
@@ -6173,6 +6713,51 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
                     }, z.core.$strip>]>>;
                 }, z.core.$strip>;
                 recurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    "@type": z.ZodLiteral<"RecurrenceRule">;
+                    frequency: z.ZodEnum<{
+                        secondly: "secondly";
+                        minutely: "minutely";
+                        hourly: "hourly";
+                        daily: "daily";
+                        weekly: "weekly";
+                        monthly: "monthly";
+                        yearly: "yearly";
+                    }>;
+                    interval: z.ZodOptional<z.ZodNumber>;
+                    firstDayOfWeek: z.ZodOptional<z.ZodEnum<{
+                        mo: "mo";
+                        tu: "tu";
+                        we: "we";
+                        th: "th";
+                        fr: "fr";
+                        sa: "sa";
+                        su: "su";
+                    }>>;
+                    byDay: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        day: z.ZodEnum<{
+                            mo: "mo";
+                            tu: "tu";
+                            we: "we";
+                            th: "th";
+                            fr: "fr";
+                            sa: "sa";
+                            su: "su";
+                        }>;
+                        nthOfPeriod: z.ZodOptional<z.ZodNumber>;
+                    }, z.core.$strip>>>;
+                    byMonthDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMonth: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byYearDay: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byWeekNo: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byHour: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    byMinute: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySecond: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    bySetPosition: z.ZodOptional<z.ZodArray<z.ZodNumber>>;
+                    timeZone: z.ZodOptional<z.ZodString>;
+                    times: z.ZodOptional<z.ZodNumber>;
+                    until: z.ZodOptional<z.ZodISODateTime>;
+                }, z.core.$strip>>>;
+                excludedRecurrenceRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     "@type": z.ZodLiteral<"RecurrenceRule">;
                     frequency: z.ZodEnum<{
                         secondly: "secondly";
@@ -6640,3 +7225,4 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
     timestamp: z.ZodISODateTime;
 }, z.core.$strip>]>;
 export type RecipeDbResponse = z.infer<typeof RecipeDbResponseSchema>;
+//# sourceMappingURL=api.schema.d.ts.map

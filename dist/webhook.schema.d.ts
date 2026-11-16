@@ -32,3 +32,4 @@ export declare const RecipeDbWebhookResponseSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"RecipeDbWebhookResponse">;
 }, z.core.$strip>;
 export type RecipeDbWebhookResponse = z.infer<typeof RecipeDbWebhookResponseSchema>;
+//# sourceMappingURL=webhook.schema.d.ts.map
