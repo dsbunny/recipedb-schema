@@ -3,12 +3,6 @@ export declare const RecipeDbWebhookClassSchema: z.ZodEnum<{
     playlist: "playlist";
 }>;
 export type RecipeDbWebhookClass = z.infer<typeof RecipeDbWebhookClassSchema>;
-export declare const RecipeDbWebhookTypeSchema: z.ZodEnum<{
-    new: "new";
-    change: "change";
-    delete: "delete";
-}>;
-export type RecipeDbWebhookType = z.infer<typeof RecipeDbWebhookTypeSchema>;
 export declare const RecipeDbWebhookRequestSchema: z.ZodObject<{
     tenant_id: z.ZodUUID;
     ref_id: z.ZodUUID;
@@ -16,11 +10,6 @@ export declare const RecipeDbWebhookRequestSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"RecipeDbWebhookRequest">;
     class: z.ZodEnum<{
         playlist: "playlist";
-    }>;
-    type: z.ZodEnum<{
-        new: "new";
-        change: "change";
-        delete: "delete";
     }>;
 }, z.core.$strip>;
 export type RecipeDbWebhookRequest = z.infer<typeof RecipeDbWebhookRequestSchema>;
