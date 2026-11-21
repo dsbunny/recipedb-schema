@@ -14,10 +14,17 @@ export const RecipeDbWebhookClassSchema = z.enum(['playlist']).register(dsbunnyR
 });
 export type RecipeDbWebhookClass = z.infer<typeof RecipeDbWebhookClassSchema>;
 
+export const RecipeDbWebhookTypeSchema = z.enum(['new', 'change']).register(dsbunnyRegistry, {
+        id: 'RecipeDbWebhookTypeSchema',
+        description: 'The type of the webhook event related to recipe operations',
+});
+export type RecipeDbWebhookType = z.infer<typeof RecipeDbWebhookTypeSchema>;
+
 export const RecipeDbWebhookRequestSchema = WebhookRequestSchema.extend({
         '@type': z.literal('RecipeDbWebhookRequest')
                 .describe('Type of the RecipeDB webhook request object'),
         class: RecipeDbWebhookClassSchema,
+        type: RecipeDbWebhookTypeSchema,
 }).register(dsbunnyRegistry, {
         id: 'RecipeDbWebhookRequestSchema',
         description: 'The schema for webhook requests sent by the RecipeDB',
