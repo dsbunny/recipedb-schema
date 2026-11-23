@@ -213,7 +213,7 @@ export const GetRecipeInputResponseSchema = z.object({
     id: 'GetRecipeInputResponseSchema',
     description: 'Get recipe input response schema',
 });
-export const CreateRecipeRequestSchema = z.object({
+export const CreateRecipeBodySchema = z.object({
     '@type': z.literal('CreateRecipeRequest')
         .describe('Type of the create recipe request object'),
     tenant_id: z.uuid()
@@ -226,6 +226,8 @@ export const CreateRecipeRequestSchema = z.object({
     id: 'CreateRecipeRequestSchema',
     description: 'Create recipe request schema',
 });
+/** @deprecated Use CreateRecipeBodySchema. */
+export const CreateRecipeRequestSchema = CreateRecipeBodySchema;
 export const CreateRecipeResponseSchema = z.object({
     '@type': z.literal('CreateRecipeResponse')
         .describe('Type of the create recipe response object'),
@@ -239,7 +241,7 @@ export const CreateRecipeResponseSchema = z.object({
     description: 'Create recipe response schema',
 });
 // #region Playlist
-export const CreatePlaylistRequestSchema = z.object({
+export const CreatePlaylistBodySchema = z.object({
     '@type': z.literal('CreatePlaylistRequest')
         .describe('Type of the create playlist request object'),
     tenant_id: z.uuid()
@@ -250,6 +252,8 @@ export const CreatePlaylistRequestSchema = z.object({
     id: 'CreatePlaylistRequestSchema',
     description: 'Create playlist request schema',
 });
+/** @deprecated Use CreatePlaylistBodySchema. */
+export const CreatePlaylistRequestSchema = CreatePlaylistBodySchema;
 export const CreatePlaylistResponseSchema = z.object({
     '@type': z.literal('CreatePlaylistResponse')
         .describe('Type of the create playlist response object'),
@@ -276,7 +280,7 @@ export const GetPlaylistResponseSchema = z.object({
     id: 'GetPlaylistResponseSchema',
     description: 'Get playlist response schema',
 });
-export const PatchPlaylistRequestSchema = z.object({
+export const PatchPlaylistBodySchema = z.object({
     '@type': z.literal('PatchPlaylistRequest')
         .describe('Type of the patch playlist request object'),
     patch_operations: z.array(JsonPatchOperationSchema).max(50)
@@ -284,6 +288,8 @@ export const PatchPlaylistRequestSchema = z.object({
     id: 'PatchPlaylistRequestSchema',
     description: 'Patch playlist request schema',
 });
+/** @deprecated Use PatchPlaylistBodySchema. */
+export const PatchPlaylistRequestSchema = PatchPlaylistBodySchema;
 export const PatchPlaylistResponseSchema = z.object({
     '@type': z.literal('PatchPlaylistResponse')
         .describe('Type of the patch playlist response object'),
@@ -323,7 +329,7 @@ export const ListPlaylistsResponseSchema = z.object({
     id: 'ListPlaylistsResponseSchema',
     description: 'List playlists response schema',
 });
-export const QueryPlaylistByTemplateRequestSchema = z.object({
+export const QueryPlaylistByTemplateBodySchema = z.object({
     '@type': z.literal('QueryPlaylistByTemplateRequest')
         .describe('Type of the query playlist by template request object'),
     tenant_id: z.uuid()
@@ -334,6 +340,8 @@ export const QueryPlaylistByTemplateRequestSchema = z.object({
     id: 'QueryPlaylistByTemplateRequestSchema',
     description: 'Query playlist by template request schema',
 });
+/** @deprecated Use QueryPlaylistByTemplateBodySchema. */
+export const QueryPlaylistByTemplateRequestSchema = QueryPlaylistByTemplateBodySchema;
 export const QueryPlaylistByTemplateResponseSchema = z.object({
     '@type': z.literal('QueryPlaylistByTemplateResponse')
         .describe('Type of the query playlist by template response object'),
@@ -379,13 +387,13 @@ export const GetPlaylistAvailabilityResponseSchema = z.object({
 // #endregion
 // #region APIs
 export const RecipeDbRequestSchema = z.union([
-    CreateRecipeRequestSchema,
+    CreateRecipeBodySchema,
     GetRecipeRequestSchema,
     GetRecipeLinkRequestSchema,
     GetRecipeInputRequestSchema,
     ListRecipeInputsRequestSchema,
     ListRecipesRequestSchema,
-    CreatePlaylistRequestSchema,
+    CreatePlaylistBodySchema,
     GetPlaylistRequestSchema,
     ListPlaylistsRequestSchema,
     GetPlaylistSuggestionsRequestSchema,
@@ -412,4 +420,80 @@ export const RecipeDbResponseSchema = z.union([
     description: 'RecipeDB response schema',
 });
 // #endregion
+export const RecipeDbRecipeIdParamsSchema = z.object({ recipe_id: z.string() }).register(dsbunnyRegistry, {
+    id: 'RecipeDbRecipeIdParamsSchema',
+    description: 'RecipeDB recipe ID path parameter schema',
+});
+export const PlaylistIdParamsSchema = z.object({ playlist_id: z.string() }).register(dsbunnyRegistry, {
+    id: 'PlaylistIdParamsSchema',
+    description: 'PlaylistIdParams schema',
+});
+const commaSeparatedStrings = z.codec(z.union([z.string(), z.array(z.string())]), z.array(z.string()), {
+    decode: value => (Array.isArray(value) ? value : [value])
+        .flatMap(item => item.split(',').map(part => part.trim()).filter(Boolean)),
+    encode: value => value.join(','),
+});
+export const RecipeIdQuerySchema = z.object({ recipe_id: commaSeparatedStrings }).register(dsbunnyRegistry, {
+    id: 'RecipeIdQuerySchema',
+    description: 'RecipeIdQuery schema',
+});
+export const PlaylistIdQuerySchema = z.object({ playlist_id: z.array(z.string()) }).register(dsbunnyRegistry, {
+    id: 'PlaylistIdQuerySchema',
+    description: 'PlaylistIdQuery schema',
+});
+export const ListRecipeInputsQuerySchema = z.object({
+    max_results: z.string().optional(),
+    next_token: z.string().optional(),
+    sort_by: z.string().optional(),
+    sort_dir: z.string().optional(),
+}).extend({
+    validity: z.string().optional(),
+    recipe_id: z.array(z.string()).optional(),
+    publish_id: z.array(z.string()).optional(),
+    canvas_id: z.array(z.string()).optional(),
+    viewport_id: z.array(z.string()).optional(),
+    playlist_id: z.array(z.string()).optional(),
+    asset_id: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+    id: 'ListRecipeInputsQuerySchema',
+    description: 'ListRecipeInputsQuery schema',
+});
+export const ListRecipesQuerySchema = z.object({
+    max_results: z.string().optional(),
+    next_token: z.string().optional(),
+    sort_by: z.string().optional(),
+    sort_dir: z.string().optional(),
+}).extend({
+    recipe_id: z.array(z.string()).optional(),
+    publish_id: z.array(z.string()).optional(),
+    canvas_id: z.array(z.string()).optional(),
+    viewport_id: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+    id: 'ListRecipesQuerySchema',
+    description: 'ListRecipesQuery schema',
+});
+export const GetPlaylistSuggestionsQuerySchema = z.object({
+    q: z.string().optional(), c: z.string().optional(), t: z.string().optional(),
+}).register(dsbunnyRegistry, {
+    id: 'GetPlaylistSuggestionsQuerySchema',
+    description: 'GetPlaylistSuggestionsQuery schema',
+});
+export const GetPlaylistAvailabilityQuerySchema = z.object({ name: z.string() }).register(dsbunnyRegistry, {
+    id: 'GetPlaylistAvailabilityQuerySchema',
+    description: 'GetPlaylistAvailabilityQuery schema',
+});
+export const ListPlaylistsQuerySchema = z.object({
+    max_results: z.string().optional(),
+    next_token: z.string().optional(),
+    sort_by: z.string().optional(),
+    sort_dir: z.string().optional(),
+}).extend({
+    id: z.string().optional(),
+    playlist_id: z.array(z.string()).optional(),
+    q: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+    id: 'ListPlaylistsQuerySchema',
+    description: 'ListPlaylistsQuery schema',
+});
 //# sourceMappingURL=api.schema.js.map

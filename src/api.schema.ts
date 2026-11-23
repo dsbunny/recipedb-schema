@@ -250,7 +250,7 @@ export const GetRecipeInputResponseSchema = z.object({
 });
 export type GetRecipeInputResponse = z.infer<typeof GetRecipeInputResponseSchema>;
 
-export const CreateRecipeRequestSchema = z.object({
+export const CreateRecipeBodySchema = z.object({
 	'@type': z.literal('CreateRecipeRequest')
 		.describe('Type of the create recipe request object'),
 	tenant_id: z.uuid()
@@ -263,7 +263,11 @@ export const CreateRecipeRequestSchema = z.object({
 	id: 'CreateRecipeRequestSchema',
 	description: 'Create recipe request schema',
 });
-export type CreateRecipeRequest = z.infer<typeof CreateRecipeRequestSchema>;
+export type CreateRecipeBody = z.infer<typeof CreateRecipeBodySchema>;
+/** @deprecated Use CreateRecipeBodySchema. */
+export const CreateRecipeRequestSchema = CreateRecipeBodySchema;
+/** @deprecated Use CreateRecipeBody. */
+export type CreateRecipeRequest = CreateRecipeBody;
 export const CreateRecipeResponseSchema = z.object({
 	'@type': z.literal('CreateRecipeResponse')
 		.describe('Type of the create recipe response object'),
@@ -279,7 +283,7 @@ export const CreateRecipeResponseSchema = z.object({
 export type CreateRecipeResponse = z.infer<typeof CreateRecipeResponseSchema>;
 
 // #region Playlist
-export const CreatePlaylistRequestSchema = z.object({
+export const CreatePlaylistBodySchema = z.object({
 	'@type': z.literal('CreatePlaylistRequest')
 		.describe('Type of the create playlist request object'),
 	tenant_id: z.uuid()
@@ -290,7 +294,11 @@ export const CreatePlaylistRequestSchema = z.object({
 	id: 'CreatePlaylistRequestSchema',
 	description: 'Create playlist request schema',
 });
-export type CreatePlaylistRequest = z.infer<typeof CreatePlaylistRequestSchema>;
+export type CreatePlaylistBody = z.infer<typeof CreatePlaylistBodySchema>;
+/** @deprecated Use CreatePlaylistBodySchema. */
+export const CreatePlaylistRequestSchema = CreatePlaylistBodySchema;
+/** @deprecated Use CreatePlaylistBody. */
+export type CreatePlaylistRequest = CreatePlaylistBody;
 export const CreatePlaylistResponseSchema = z.object({
 	'@type': z.literal('CreatePlaylistResponse')
 		.describe('Type of the create playlist response object'),
@@ -322,7 +330,7 @@ export const GetPlaylistResponseSchema = z.object({
 });
 export type GetPlaylistResponse = z.infer<typeof GetPlaylistResponseSchema>;
 
-export const PatchPlaylistRequestSchema = z.object({
+export const PatchPlaylistBodySchema = z.object({
 	'@type': z.literal('PatchPlaylistRequest')
 		.describe('Type of the patch playlist request object'),
 	patch_operations: z.array(JsonPatchOperationSchema).max(50)
@@ -330,7 +338,11 @@ export const PatchPlaylistRequestSchema = z.object({
 	id: 'PatchPlaylistRequestSchema',
 	description: 'Patch playlist request schema',
 });
-export type PatchPlaylistRequest = z.infer<typeof PatchPlaylistRequestSchema>;
+export type PatchPlaylistBody = z.infer<typeof PatchPlaylistBodySchema>;
+/** @deprecated Use PatchPlaylistBodySchema. */
+export const PatchPlaylistRequestSchema = PatchPlaylistBodySchema;
+/** @deprecated Use PatchPlaylistBody. */
+export type PatchPlaylistRequest = PatchPlaylistBody;
 export const PatchPlaylistResponseSchema = z.object({
 	'@type': z.literal('PatchPlaylistResponse')
 		.describe('Type of the patch playlist response object'),
@@ -378,7 +390,7 @@ export const ListPlaylistsResponseSchema = z.object({
 });
 export type ListPlaylistsResponse = z.infer<typeof ListPlaylistsResponseSchema>;
 
-export const QueryPlaylistByTemplateRequestSchema = z.object({
+export const QueryPlaylistByTemplateBodySchema = z.object({
 	'@type': z.literal('QueryPlaylistByTemplateRequest')
 		.describe('Type of the query playlist by template request object'),
 	tenant_id: z.uuid()
@@ -389,7 +401,11 @@ export const QueryPlaylistByTemplateRequestSchema = z.object({
 	id: 'QueryPlaylistByTemplateRequestSchema',
 	description: 'Query playlist by template request schema',
 });
-export type QueryPlaylistByTemplateRequest = z.infer<typeof QueryPlaylistByTemplateRequestSchema>;
+export type QueryPlaylistByTemplateBody = z.infer<typeof QueryPlaylistByTemplateBodySchema>;
+/** @deprecated Use QueryPlaylistByTemplateBodySchema. */
+export const QueryPlaylistByTemplateRequestSchema = QueryPlaylistByTemplateBodySchema;
+/** @deprecated Use QueryPlaylistByTemplateBody. */
+export type QueryPlaylistByTemplateRequest = QueryPlaylistByTemplateBody;
 export const QueryPlaylistByTemplateResponseSchema = z.object({
 	'@type': z.literal('QueryPlaylistByTemplateResponse')
 		.describe('Type of the query playlist by template response object'),
@@ -443,13 +459,13 @@ export type GetPlaylistAvailabilityResponse = z.infer<typeof GetPlaylistAvailabi
 
 // #region APIs
 export const RecipeDbRequestSchema = z.union([
-	CreateRecipeRequestSchema,
+	CreateRecipeBodySchema,
 	GetRecipeRequestSchema,
 	GetRecipeLinkRequestSchema,
 	GetRecipeInputRequestSchema,
 	ListRecipeInputsRequestSchema,
 	ListRecipesRequestSchema,
-	CreatePlaylistRequestSchema,
+	CreatePlaylistBodySchema,
 	GetPlaylistRequestSchema,
 	ListPlaylistsRequestSchema,
 	GetPlaylistSuggestionsRequestSchema,
@@ -479,3 +495,102 @@ export const RecipeDbResponseSchema = z.union([
 });
 export type RecipeDbResponse = z.infer<typeof RecipeDbResponseSchema>;
 // #endregion
+
+export const RecipeDbRecipeIdParamsSchema = z.object({ recipe_id: z.string() }).register(dsbunnyRegistry, {
+	id: 'RecipeDbRecipeIdParamsSchema',
+	description: 'RecipeDB recipe ID path parameter schema',
+});
+export type RecipeDbRecipeIdParams = z.infer<typeof RecipeDbRecipeIdParamsSchema>;
+
+export const PlaylistIdParamsSchema = z.object({ playlist_id: z.string() }).register(dsbunnyRegistry, {
+	id: 'PlaylistIdParamsSchema',
+	description: 'PlaylistIdParams schema',
+});
+export type PlaylistIdParams = z.infer<typeof PlaylistIdParamsSchema>;
+
+const commaSeparatedStrings = z.codec(
+	z.union([z.string(), z.array(z.string())]),
+	z.array(z.string()),
+	{
+		decode: value => (Array.isArray(value) ? value : [value])
+			.flatMap(item => item.split(',').map(part => part.trim()).filter(Boolean)),
+		encode: value => value.join(','),
+	},
+);
+
+export const RecipeIdQuerySchema = z.object({ recipe_id: commaSeparatedStrings }).register(dsbunnyRegistry, {
+	id: 'RecipeIdQuerySchema',
+	description: 'RecipeIdQuery schema',
+});
+export type RecipeIdQuery = z.infer<typeof RecipeIdQuerySchema>;
+
+export const PlaylistIdQuerySchema = z.object({ playlist_id: z.array(z.string()) }).register(dsbunnyRegistry, {
+	id: 'PlaylistIdQuerySchema',
+	description: 'PlaylistIdQuery schema',
+});
+export type PlaylistIdQuery = z.infer<typeof PlaylistIdQuerySchema>;
+
+export const ListRecipeInputsQuerySchema = z.object({
+	max_results: z.string().optional(),
+	next_token: z.string().optional(),
+	sort_by: z.string().optional(),
+	sort_dir: z.string().optional(),
+}).extend({
+	validity: z.string().optional(),
+	recipe_id: z.array(z.string()).optional(),
+	publish_id: z.array(z.string()).optional(),
+	canvas_id: z.array(z.string()).optional(),
+	viewport_id: z.array(z.string()).optional(),
+	playlist_id: z.array(z.string()).optional(),
+	asset_id: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+	id: 'ListRecipeInputsQuerySchema',
+	description: 'ListRecipeInputsQuery schema',
+});
+export type ListRecipeInputsQuery = z.infer<typeof ListRecipeInputsQuerySchema>;
+
+export const ListRecipesQuerySchema = z.object({
+	max_results: z.string().optional(),
+	next_token: z.string().optional(),
+	sort_by: z.string().optional(),
+	sort_dir: z.string().optional(),
+}).extend({
+	recipe_id: z.array(z.string()).optional(),
+	publish_id: z.array(z.string()).optional(),
+	canvas_id: z.array(z.string()).optional(),
+	viewport_id: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+	id: 'ListRecipesQuerySchema',
+	description: 'ListRecipesQuery schema',
+});
+export type ListRecipesQuery = z.infer<typeof ListRecipesQuerySchema>;
+
+export const GetPlaylistSuggestionsQuerySchema = z.object({
+	q: z.string().optional(), c: z.string().optional(), t: z.string().optional(),
+}).register(dsbunnyRegistry, {
+	id: 'GetPlaylistSuggestionsQuerySchema',
+	description: 'GetPlaylistSuggestionsQuery schema',
+});
+export type GetPlaylistSuggestionsQuery = z.infer<typeof GetPlaylistSuggestionsQuerySchema>;
+
+export const GetPlaylistAvailabilityQuerySchema = z.object({ name: z.string() }).register(dsbunnyRegistry, {
+	id: 'GetPlaylistAvailabilityQuerySchema',
+	description: 'GetPlaylistAvailabilityQuery schema',
+});
+export type GetPlaylistAvailabilityQuery = z.infer<typeof GetPlaylistAvailabilityQuerySchema>;
+
+export const ListPlaylistsQuerySchema = z.object({
+	max_results: z.string().optional(),
+	next_token: z.string().optional(),
+	sort_by: z.string().optional(),
+	sort_dir: z.string().optional(),
+}).extend({
+	id: z.string().optional(),
+	playlist_id: z.array(z.string()).optional(),
+	q: z.string().optional(),
+	tags: z.array(z.string()).optional(),
+}).register(dsbunnyRegistry, {
+	id: 'ListPlaylistsQuerySchema',
+	description: 'ListPlaylistsQuery schema',
+});
+export type ListPlaylistsQuery = z.infer<typeof ListPlaylistsQuerySchema>;
