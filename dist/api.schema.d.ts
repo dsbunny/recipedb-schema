@@ -1,15 +1,31 @@
 import * as z from "zod";
-export declare const CanvasViewportSchema: z.ZodObject<{
-    '@type': z.ZodLiteral<"CanvasViewport">;
+export declare const CanvasViewportInputSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"CanvasViewportInput">;
     canvas_id: z.ZodUUID;
     viewport_ids: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
-export type CanvasViewport = z.infer<typeof CanvasViewportSchema>;
-export declare const CanvasViewportArraySchema: z.ZodArray<z.ZodObject<{
-    '@type': z.ZodLiteral<"CanvasViewport">;
+export type CanvasViewportInput = z.infer<typeof CanvasViewportInputSchema>;
+export declare const CanvasViewportInputArraySchema: z.ZodArray<z.ZodObject<{
+    '@type': z.ZodLiteral<"CanvasViewportInput">;
     canvas_id: z.ZodUUID;
     viewport_ids: z.ZodArray<z.ZodString>;
 }, z.core.$strip>>;
+export declare const CanvasViewportRecordSchema: z.ZodObject<{
+    canvas_id: z.ZodUUID;
+    viewport_ids: z.ZodArray<z.ZodString>;
+    '@type': z.ZodLiteral<"CanvasViewportRecord">;
+    is_active: z.ZodBoolean;
+    is_latest: z.ZodBoolean;
+}, z.core.$strip>;
+export type CanvasViewportRecord = z.infer<typeof CanvasViewportRecordSchema>;
+export declare const CanvasViewportRecordArraySchema: z.ZodArray<z.ZodObject<{
+    canvas_id: z.ZodUUID;
+    viewport_ids: z.ZodArray<z.ZodString>;
+    '@type': z.ZodLiteral<"CanvasViewportRecord">;
+    is_active: z.ZodBoolean;
+    is_latest: z.ZodBoolean;
+}, z.core.$strip>>;
+export type CanvasViewportRecordArray = z.infer<typeof CanvasViewportRecordArraySchema>;
 export declare const PlaylistInputSchema: z.ZodObject<{
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
@@ -222,8 +238,10 @@ export declare const PlaylistRecordSchema: z.ZodObject<{
     }, z.core.$strip>]>>;
     '@type': z.ZodLiteral<"PlaylistRecord">;
     tenant_id: z.ZodUUID;
+    is_active: z.ZodBoolean;
     create_timestamp: z.ZodISODateTime;
     modify_timestamp: z.ZodISODateTime;
+    expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
 }, z.core.$strip>;
 export type PlaylistRecord = z.infer<typeof PlaylistRecordSchema>;
 export declare const RecipeInputSchema: z.ZodObject<{
@@ -604,7 +622,7 @@ export declare const RecipeInputSchema: z.ZodObject<{
     publish_id: z.ZodUUID;
     publisher_identity: z.ZodString;
     canvas_viewports: z.ZodArray<z.ZodObject<{
-        '@type': z.ZodLiteral<"CanvasViewport">;
+        '@type': z.ZodLiteral<"CanvasViewportInput">;
         canvas_id: z.ZodUUID;
         viewport_ids: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
@@ -616,9 +634,11 @@ export declare const RecipeInputRecordSchema: z.ZodObject<{
     publish_id: z.ZodUUID;
     publisher_identity: z.ZodString;
     canvas_viewports: z.ZodArray<z.ZodObject<{
-        '@type': z.ZodLiteral<"CanvasViewport">;
         canvas_id: z.ZodUUID;
         viewport_ids: z.ZodArray<z.ZodString>;
+        '@type': z.ZodLiteral<"CanvasViewportRecord">;
+        is_active: z.ZodBoolean;
+        is_latest: z.ZodBoolean;
     }, z.core.$strip>>;
     playlist_ids: z.ZodArray<z.ZodUUID>;
     asset_ids: z.ZodArray<z.ZodUUID>;
@@ -1445,8 +1465,8 @@ export declare const ListRecipeInputsRequestSchema: z.ZodObject<{
     sort_by: z.ZodOptional<z.ZodEnum<{
         create_timestamp: "create_timestamp";
         modify_timestamp: "modify_timestamp";
-        publisher_identity: "publisher_identity";
         expiry_timestamp: "expiry_timestamp";
+        publisher_identity: "publisher_identity";
     }>>;
 }, z.core.$strip>;
 export type ListRecipeInputsRequest = z.infer<typeof ListRecipeInputsRequestSchema>;
@@ -1458,9 +1478,11 @@ export declare const ListRecipeInputsResponseSchema: z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
+            '@type': z.ZodLiteral<"CanvasViewportRecord">;
+            is_active: z.ZodBoolean;
+            is_latest: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;
@@ -1868,8 +1890,8 @@ export declare const ListRecipesRequestSchema: z.ZodObject<{
     sort_by: z.ZodOptional<z.ZodEnum<{
         create_timestamp: "create_timestamp";
         modify_timestamp: "modify_timestamp";
-        publisher_identity: "publisher_identity";
         expiry_timestamp: "expiry_timestamp";
+        publisher_identity: "publisher_identity";
     }>>;
 }, z.core.$strip>;
 export type ListRecipesRequest = z.infer<typeof ListRecipesRequestSchema>;
@@ -2743,9 +2765,11 @@ export declare const GetRecipeInputResponseSchema: z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
+            '@type': z.ZodLiteral<"CanvasViewportRecord">;
+            is_active: z.ZodBoolean;
+            is_latest: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;
@@ -3513,7 +3537,7 @@ export declare const CreateRecipeBodySchema: z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
+            '@type': z.ZodLiteral<"CanvasViewportInput">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
@@ -3903,7 +3927,7 @@ export declare const CreateRecipeRequestSchema: z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
+            '@type': z.ZodLiteral<"CanvasViewportInput">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
@@ -4277,8 +4301,10 @@ export declare const GetPlaylistResponseSchema: z.ZodObject<{
         }, z.core.$strip>]>>;
         '@type': z.ZodLiteral<"PlaylistRecord">;
         tenant_id: z.ZodUUID;
+        is_active: z.ZodBoolean;
         create_timestamp: z.ZodISODateTime;
         modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetPlaylistResponse = z.infer<typeof GetPlaylistResponseSchema>;
@@ -4450,8 +4476,10 @@ export declare const PatchPlaylistResponseSchema: z.ZodObject<{
         }, z.core.$strip>]>>;
         '@type': z.ZodLiteral<"PlaylistRecord">;
         tenant_id: z.ZodUUID;
+        is_active: z.ZodBoolean;
         create_timestamp: z.ZodISODateTime;
         modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type PatchPlaylistResponse = z.infer<typeof PatchPlaylistResponseSchema>;
@@ -4575,8 +4603,10 @@ export declare const ListPlaylistsResponseSchema: z.ZodObject<{
         }, z.core.$strip>]>>;
         '@type': z.ZodLiteral<"PlaylistRecord">;
         tenant_id: z.ZodUUID;
+        is_active: z.ZodBoolean;
         create_timestamp: z.ZodISODateTime;
         modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
     }, z.core.$strip>>;
     next_token: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -5127,7 +5157,7 @@ export declare const RecipeDbRequestSchema: z.ZodUnion<readonly [z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
+            '@type': z.ZodLiteral<"CanvasViewportInput">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
@@ -5162,8 +5192,8 @@ export declare const RecipeDbRequestSchema: z.ZodUnion<readonly [z.ZodObject<{
     sort_by: z.ZodOptional<z.ZodEnum<{
         create_timestamp: "create_timestamp";
         modify_timestamp: "modify_timestamp";
-        publisher_identity: "publisher_identity";
         expiry_timestamp: "expiry_timestamp";
+        publisher_identity: "publisher_identity";
     }>>;
 }, z.core.$strip>, z.ZodObject<{
     validity: z.ZodOptional<z.ZodEnum<{
@@ -5185,8 +5215,8 @@ export declare const RecipeDbRequestSchema: z.ZodUnion<readonly [z.ZodObject<{
     sort_by: z.ZodOptional<z.ZodEnum<{
         create_timestamp: "create_timestamp";
         modify_timestamp: "modify_timestamp";
-        publisher_identity: "publisher_identity";
         expiry_timestamp: "expiry_timestamp";
+        publisher_identity: "publisher_identity";
     }>>;
 }, z.core.$strip>, z.ZodObject<{
     '@type': z.ZodLiteral<"CreatePlaylistRequest">;
@@ -5767,9 +5797,11 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
+            '@type': z.ZodLiteral<"CanvasViewportRecord">;
+            is_active: z.ZodBoolean;
+            is_latest: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;
@@ -6162,9 +6194,11 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         publish_id: z.ZodUUID;
         publisher_identity: z.ZodString;
         canvas_viewports: z.ZodArray<z.ZodObject<{
-            '@type': z.ZodLiteral<"CanvasViewport">;
             canvas_id: z.ZodUUID;
             viewport_ids: z.ZodArray<z.ZodString>;
+            '@type': z.ZodLiteral<"CanvasViewportRecord">;
+            is_active: z.ZodBoolean;
+            is_latest: z.ZodBoolean;
         }, z.core.$strip>>;
         playlist_ids: z.ZodArray<z.ZodUUID>;
         asset_ids: z.ZodArray<z.ZodUUID>;
@@ -7076,8 +7110,10 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         }, z.core.$strip>]>>;
         '@type': z.ZodLiteral<"PlaylistRecord">;
         tenant_id: z.ZodUUID;
+        is_active: z.ZodBoolean;
         create_timestamp: z.ZodISODateTime;
         modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
     }, z.core.$strip>;
 }, z.core.$strip>, z.ZodObject<{
     '@type': z.ZodLiteral<"ListPlaylistsResponse">;
@@ -7187,8 +7223,10 @@ export declare const RecipeDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
         }, z.core.$strip>]>>;
         '@type': z.ZodLiteral<"PlaylistRecord">;
         tenant_id: z.ZodUUID;
+        is_active: z.ZodBoolean;
         create_timestamp: z.ZodISODateTime;
         modify_timestamp: z.ZodISODateTime;
+        expiry_timestamp: z.ZodNullable<z.ZodISODateTime>;
     }, z.core.$strip>>;
     next_token: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{

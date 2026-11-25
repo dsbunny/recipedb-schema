@@ -6,8 +6,8 @@ import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import { JsonPatchOperationSchema } from '@dsbunny/patch-schema';
 import { RecipeTemplateSchema } from './recipe-template.schema.js';
 import { RecipeSchema } from "@dsbunny/recipe-schema";
-export const CanvasViewportSchema = z.object({
-    '@type': z.literal('CanvasViewport')
+export const CanvasViewportInputSchema = z.object({
+    '@type': z.literal('CanvasViewportInput')
         .describe('Type of the canvas viewport object'),
     canvas_id: z.uuid()
         .describe('Canvas identifier'),
@@ -15,13 +15,29 @@ export const CanvasViewportSchema = z.object({
         .refine(viewport_ids => new Set(viewport_ids).size === viewport_ids.length, 'Viewport identifiers must be unique.')
         .describe('Viewport identifiers for this canvas'),
 }).register(dsbunnyRegistry, {
-    id: 'CanvasViewportSchema',
+    id: 'CanvasViewportInputSchema',
     description: 'Canvas and its viewport identifiers',
 });
-export const CanvasViewportArraySchema = z.array(CanvasViewportSchema).min(1)
+export const CanvasViewportInputArraySchema = z.array(CanvasViewportInputSchema).min(1)
     .refine(canvas_viewports => new Set(canvas_viewports.map(({ canvas_id }) => canvas_id)).size === canvas_viewports.length, 'Canvas identifiers must be unique.').register(dsbunnyRegistry, {
-    id: 'CanvasViewportArraySchema',
+    id: 'CanvasViewportInputArraySchema',
     description: 'Array of canvas-to-viewport mappings',
+});
+export const CanvasViewportRecordSchema = CanvasViewportInputSchema.extend({
+    '@type': z.literal('CanvasViewportRecord')
+        .describe('Type of the canvas viewport record object'),
+    is_active: z.boolean()
+        .describe('Indicates if the canvas viewport is active'),
+    is_latest: z.boolean()
+        .describe('Indicates if the canvas viewport is the latest one'),
+}).register(dsbunnyRegistry, {
+    id: 'CanvasViewportRecordSchema',
+    description: 'Canvas viewport record',
+});
+export const CanvasViewportRecordArraySchema = z.array(CanvasViewportRecordSchema).min(1)
+    .register(dsbunnyRegistry, {
+    id: 'CanvasViewportRecordArraySchema',
+    description: 'Array of canvas viewport records',
 });
 export const PlaylistInputSchema = RecipeSchema.PlaylistSchema.omit({
     playlist_id: true,
@@ -36,8 +52,12 @@ export const PlaylistRecordSchema = RecipeSchema.PlaylistSchema.extend({
     '@type': z.literal('PlaylistRecord')
         .describe('Type of the playlist record object'),
     tenant_id: z.uuid(),
+    is_active: z.boolean()
+        .describe('Indicates if the playlist is active'),
     create_timestamp: z.iso.datetime(),
     modify_timestamp: z.iso.datetime(),
+    expiry_timestamp: z.iso.datetime().nullable()
+        .describe('Expiry timestamp of the playlist'),
 }).register(dsbunnyRegistry, {
     id: 'PlaylistRecordSchema',
     description: 'Playlist record',
@@ -49,7 +69,7 @@ export const RecipeInputSchema = RecipeSchema.RecipeBaseSchema.extend({
         .describe('Publish identifier'),
     publisher_identity: z.string().min(1).max(256)
         .describe('Identity of the publishing user'),
-    canvas_viewports: CanvasViewportArraySchema,
+    canvas_viewports: CanvasViewportInputArraySchema,
 }).register(dsbunnyRegistry, {
     id: 'RecipeInputSchema',
     description: 'Shared input for all outputs created by one publish',
@@ -60,7 +80,7 @@ export const RecipeInputRecordSchema = z.object({
     tenant_id: z.uuid(),
     publish_id: z.uuid(),
     publisher_identity: z.string(),
-    canvas_viewports: CanvasViewportArraySchema,
+    canvas_viewports: CanvasViewportRecordArraySchema,
     playlist_ids: z.array(z.uuid()),
     asset_ids: z.array(z.uuid()),
     recipe_data: RecipeSchema.RecipeBaseSchema,

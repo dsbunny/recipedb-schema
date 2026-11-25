@@ -5,6 +5,7 @@
 - Mark _optional_ schema values for HTTP requests that typically do not include a _body_.
 - Move recipe template schemas into `recipedb-schema` and export them for Publisher use.
 - Rename `*RequestSchema` to `*BodySchema` to add `*QuerySchema` and `*ParamsSchema`.
+- Add `is_active` and `expiry_timestamp` to `PlaylistRecordSchema` to track _playlist_ usage.
 
 ## v4.2.7
 - Add `@dsbunny/publisher-schema` dependency to use _recipe templates_.
