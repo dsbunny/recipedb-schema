@@ -6,6 +6,13 @@ import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import { JsonPatchOperationSchema } from '@dsbunny/patch-schema';
 import { RecipeTemplateSchema } from './recipe-template.schema.js';
 import { RecipeSchema } from "@dsbunny/recipe-schema";
+export const RecipeDbPingResponseSchema = z.object({
+    ping: z.literal('pong'),
+    timestamp: z.iso.datetime(),
+}).register(dsbunnyRegistry, {
+    id: 'RecipeDbPingResponseSchema',
+    description: 'RecipeDB ping response schema',
+});
 export const CanvasViewportInputSchema = z.object({
     '@type': z.literal('CanvasViewportInput')
         .describe('Type of the canvas viewport object'),

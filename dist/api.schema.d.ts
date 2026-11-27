@@ -1,4 +1,9 @@
 import * as z from "zod";
+export declare const RecipeDbPingResponseSchema: z.ZodObject<{
+    ping: z.ZodLiteral<"pong">;
+    timestamp: z.ZodISODateTime;
+}, z.core.$strip>;
+export type RecipeDbPingResponse = z.infer<typeof RecipeDbPingResponseSchema>;
 export declare const CanvasViewportInputSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"CanvasViewportInput">;
     canvas_id: z.ZodUUID;
